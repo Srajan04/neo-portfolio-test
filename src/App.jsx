@@ -705,7 +705,7 @@ const Contact = () => (
           <div className="flex flex-wrap justify-center gap-4">
              <a 
                href={`mailto:${PERSONAL_INFO.email}`}
-               className="flex items-center gap-2 bg-black text-white px-6 py-3 font-bold border-2 border-transparent hover:bg-white hover:text-black hover:border-black transition-colors"
+               className="flex items-center gap-2 bg-black text-white px-6 py-3 font-bold border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-white hover:text-black hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all"
              >
                <Mail size={20} /> Email Me
              </a>
@@ -713,7 +713,7 @@ const Contact = () => (
                href={PERSONAL_INFO.linkedin}
                target="_blank"
                rel="noreferrer"
-               className="flex items-center gap-2 bg-white text-black px-6 py-3 font-bold border-2 border-black hover:bg-[#8FD0F5] transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px]"
+               className="flex items-center gap-2 bg-white text-black px-6 py-3 font-bold border-[3px] border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-[#8FD0F5] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] transition-all"
              >
                <Linkedin size={20} /> LinkedIn
              </a>
@@ -729,18 +729,71 @@ const Contact = () => (
         </div>
         <div className="flex gap-4">
            <a href={PERSONAL_INFO.github} className="hover:underline">GITHUB</a>
-           <a href="#" className="hover:underline">TWITTER</a>
+           <a href="https://x.com/SolankiSrajan" className="hover:underline">X (FORMERLY TWITTER)</a>
         </div>
       </div>
     </div>
   </section>
 );
 
+const DisclaimerModal = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-300">
+      <div className="bg-white border-[4px] border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] max-w-md w-full p-6 relative flex flex-col gap-4">
+        
+        <div className="absolute -top-4 -left-4 bg-[#FFD90F] border-[3px] border-black px-4 py-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] font-black text-sm transform -rotate-2">
+          ⚠️ DISCLAIMER
+        </div>
+
+        <h2 className="text-2xl font-black font-libre mt-4">
+          PROJECT INFO
+        </h2>
+
+        <div className="space-y-3 font-raleway font-medium text-sm leading-relaxed">
+          <p>
+            This is a <span className="font-bold bg-[#8FD0F5] px-1 border border-black">test portfolio</span> built to evaluate the capabilities of <span className="font-bold">Gemini 3 Pro</span>.
+          </p>
+          
+          <p>
+            The design is heavily inspired by the work of <span className="font-black underline decoration-2 underline-offset-2">Marjo Ballabani</span>. All design credits go to him.
+          </p>
+
+          <div className="bg-gray-100 border-[2px] border-black p-3 text-xs mt-2">
+            <p className="font-bold mb-1">LICENSE NOTICE:</p>
+            This project contains personal information and is <span className="font-bold text-red-600">NOT OPEN SOURCE</span>. 
+            The code is available at my GitHub for viewing only. Copying or commercial use is strictly prohibited.
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-3 mt-2">
+          <a 
+            href="https://github.com/Srajan04/neo-portfolio-test"
+            target="_blank"
+            rel="noreferrer"
+            className="text-center bg-white text-black font-bold py-3 border-[3px] border-black hover:bg-[#8FD0F5] transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] uppercase tracking-wide flex items-center justify-center gap-2"
+          >
+            <Github size={18} /> View Code on GitHub
+          </a>
+          <button 
+            onClick={onClose}
+            className="bg-black text-white font-bold py-3 border-[3px] border-transparent hover:bg-white hover:text-black hover:border-black transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,0)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] uppercase tracking-wide"
+          >
+            Understood, Enter Site
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // --- APP COMPONENT ---
 
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+  const [showDisclaimer, setShowDisclaimer] = useState(true);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -815,6 +868,7 @@ export default function App() {
       </button>
 
       <TerminalModal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
+      <DisclaimerModal isOpen={showDisclaimer} onClose={() => setShowDisclaimer(false)} />
     </div>
   );
 }
